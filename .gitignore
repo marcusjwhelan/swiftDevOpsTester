@@ -1,7 +1,20 @@
+# build
 Packages
 .build
 xcuserdata
 *.xcodeproj
 DerivedData/
+
+# mac dir file
 .DS_Store
+
+# IDE direcotry settings
 .idea
+
+# compiled files
+*.tfstate
+*.tfstate.backup
+.terraform.tfstate.lock.info
+
+# module directory
+.terraform/

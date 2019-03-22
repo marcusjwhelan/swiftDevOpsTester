@@ -1,6 +1,6 @@
 .git
 .build
+.idea
 DerivedData
 Package.resolved
 *.xcodeproj
-
