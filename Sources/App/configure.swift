@@ -7,7 +7,7 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     try services.register(FluentPostgreSQLProvider())
 
     // Register routes to the router
-    let router = EngineRouter.default()
+    let router: EngineRouter = EngineRouter.default()
     try routes(router)
     services.register(router, as: Router.self)
 
@@ -17,17 +17,18 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     middlewares.use(ErrorMiddleware.self) // Catches errors and converts to HTTP response
     services.register(middlewares)
 
-    let directoryConfig = DirectoryConfig.detect() // access to this directory?
+    let directoryConfig: DirectoryConfig = DirectoryConfig.detect() // access to this directory?
     services.register(directoryConfig)
 
     // configure postgres
     let db: PostgreSQLDatabase
+    var databases = DatabasesConfig()
     if env.isRelease {
         let port: String? = Environment.get("PORT")
-        let hostName: String? = Environment.get("HOST")
-        let username: String? = Environment.get("USERNAME")
-        let password: String? = Environment.get("PASSWORD")
-        let database: String? = Environment.get("DB")
+        let hostName: String? = Environment.get("DB_HOSTNAME") ?? "localhost"
+        let username: String? = Environment.get("POSTGRES_USER") ?? "postgres"
+        let password: String? = Environment.get("POSTGRES_PASSWORD")
+        let database: String? = Environment.get("POSTGRES_DB")
         let portValue = Int(port!)!
 
         let d = PostgreSQLDatabaseConfig(
@@ -41,17 +42,17 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
         db = PostgreSQLDatabase(config: d)
     } else {
         let d = PostgreSQLDatabaseConfig(
-                hostname: "127.0.0.1",
+                hostname: "0.0.0.0",
                 port: 5432,
-                username: "postgres",
-                database: "devopstester",
-                password: "marcus",
+                username: "test",
+                database: "test",
+                password: "test",
                 transport: .cleartext
         )
         db = PostgreSQLDatabase(config: d)
     }
-
-    services.register(db)
+    databases.add(database: db, as: .psql)
+    services.register(databases)
 
     // Configure migrations
     var migrations = MigrationConfig()

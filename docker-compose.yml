@@ -1,0 +1,35 @@
+version: "3.3"
+services:
+  api:
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    image: api:dev
+    environment:
+      - DATABASE_HOSTNAME=postgres
+      - DATABASE_PORT=5432
+    ports:
+      - 8080
+    volumes:
+      - .:/app
+    working_dir: /app
+    stdin_open: true
+    tty: true
+    entrypoint: bash
+    depends_on:
+      - "db"
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432
+    environment:
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_DB=test
+    volumes:
+      - database_data:/var/lib/postgresql/data
+
+volumes:
+  database_data:
+    driver: local

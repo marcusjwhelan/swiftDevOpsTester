@@ -61,7 +61,7 @@ final class UserController: RouteCollection {
     */
     func remove(_ req: Request) throws -> Future<HTTPStatus> {
         return try req.parameters.next(User.self).flatMap { (user: User) in
-                return try user.delete(on: req).transform(to: HTTPStatus.noContent)
+                return user.delete(on: req).transform(to: HTTPStatus.noContent)
             }
     }
 }
