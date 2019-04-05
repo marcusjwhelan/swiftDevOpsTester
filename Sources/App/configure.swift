@@ -42,7 +42,7 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
         db = PostgreSQLDatabase(config: d)
     } else {
         let d = PostgreSQLDatabaseConfig(
-                hostname: "0.0.0.0",
+                hostname: "192.168.48.2",
                 port: 5432,
                 username: "test",
                 database: "test",
