@@ -46,7 +46,7 @@ services:
     restart: always
     depends_on:
       - db
-    #command: ["./.setup/docker-entrypoint.sh", "db", "swift", "run"]
+    # command: ["./.setup/docker-entrypoint.sh", "db", "swift", "run"]
 
   pgadmin:
     container_name: pgadmin_container

@@ -18,3 +18,25 @@
         <img src="http://img.shields.io/badge/swift-4.1-brightgreen.svg" alt="Swift 4.1">
     </a>
 </p>
+
+# Start Development
+
+Start container cluster in detached mode
+```bash
+docker-compose up --build -d
+```
+
+Attach to container 
+> hit enter twice to get to bash prompt of container
+```bash
+docker attach vapor_it_container
+```
+
+In api:dev container build application and start it
+```bash
+swift build && swift run Run serve -b 0.0.0.0
+```
+Should get output
+> Server starting on http://0.0.0.0:8080
+
+Application can be accessed now at localhost:8080/users for list of users or posting.
