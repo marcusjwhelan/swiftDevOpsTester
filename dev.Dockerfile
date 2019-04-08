@@ -1,7 +1,7 @@
 FROM swift:4.2 as builder
 
 RUN apt-get -qq update && apt-get -q -y install \
-  tzdata  postgresql postgresql-contrib \
+  tzdata \
   && rm -r /var/lib/apt/lists/*
 
 WORKDIR /app/

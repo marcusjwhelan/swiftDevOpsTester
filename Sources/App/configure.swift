@@ -25,7 +25,7 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     var databases = DatabasesConfig()
     if env.isRelease {
         let port: String? = Environment.get("PORT")
-        let hostName: String? = Environment.get("DB_HOSTNAME") ?? "localhost"
+        let hostName: String? = Environment.get("DB_HOSTNAME") ?? "db"
         let username: String? = Environment.get("POSTGRES_USER") ?? "postgres"
         let password: String? = Environment.get("POSTGRES_PASSWORD")
         let database: String? = Environment.get("POSTGRES_DB")
@@ -42,7 +42,7 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
         db = PostgreSQLDatabase(config: d)
     } else {
         let d = PostgreSQLDatabaseConfig(
-                hostname: "192.168.48.2",
+                hostname: "db",
                 port: 5432,
                 username: "test",
                 database: "test",

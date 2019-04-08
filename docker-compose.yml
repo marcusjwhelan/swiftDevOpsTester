@@ -70,11 +70,6 @@ services:
 
 networks:
   vapor-it-backend:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 192.168.48.0/20
 
 volumes:
   database_data:
