@@ -21,9 +21,8 @@ final class UserController: RouteCollection {
     /*
         returns array list of users by request url/users
     */
-    // func list(_ req: Request) throws -> Future<[User]> {
-    func list(_ req: Request) throws -> String {
-        return "hello"
+    func list(_ req: Request) throws -> Future<[User]> {
+        return User.query(on: req).all()
     }
     /*
         returns the User based on the sent Id

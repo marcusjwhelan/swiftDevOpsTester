@@ -1,16 +1,12 @@
-version: "3.5"
+version: "3.7"
 services:
   db:
     container_name: postgres11.2-alpine-database
-    #build:
-    #  context: .setup
-    #  dockerfile: ../db.Dockerfile
     image: postgres:11.2-alpine
     restart: always
     hostname: db
     networks:
-      vapor-it:
-        ipv4_address: 192.168.48.2
+      vapor-it-backend:
     ports:
       - 5432:5432
     environment:
@@ -19,7 +15,6 @@ services:
       POSTGRES_DB: test
     volumes:
       - $HOME/docker/volumes/vapor_postgres/:/var/lib/postgresql/data
-    #command: ["./docker-entrypoint.sh", "db:5432", "postgres"]
 
   api:
     container_name: vapor_it_container
@@ -29,14 +24,19 @@ services:
       dockerfile: dev.Dockerfile
     image: api:dev
     networks:
-      - vapor-it
+      - vapor-it-backend
     environment:
       POSTGRES_USER: test
       POSTGRES_PASSWORD: test
       POSTGRES_DB: test
       POSTGRES_PORT: 5432
     ports:
-      - 8080:8080
+      - target: 8080
+        published: 8080
+        protocol: tcp
+        mode: host
+    expose:
+      - 8080
     volumes:
       - .:/app
     working_dir: /app
@@ -46,6 +46,7 @@ services:
     restart: always
     depends_on:
       - db
+    #command: ["./.setup/docker-entrypoint.sh", "db", "swift", "run"]
 
   pgadmin:
     container_name: pgadmin_container
@@ -57,15 +58,19 @@ services:
     volumes:
       - pgadmin:/root/.pgadmin
     ports:
-      - 4000:80
+      - target: 80
+        published: 4000
+        protocol: tcp
+        mode: host
     networks:
-      - vapor-it
+      - vapor-it-backend
     restart: unless-stopped
     depends_on:
       - db
 
 networks:
-  vapor-it:
+  vapor-it-backend:
+    driver: bridge
     ipam:
       driver: default
       config:
