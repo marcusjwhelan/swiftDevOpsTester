@@ -1,7 +1,7 @@
-FROM swift:4.2 as builder
+FROM codevapor/swift:5.0 as builder
 
 RUN apt-get -qq update && apt-get -q -y install \
-  tzdata \
+    libssl-dev pkg-config\
   && rm -r /var/lib/apt/lists/*
 
 WORKDIR /app/

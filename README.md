@@ -22,8 +22,10 @@
 # Start Development
 
 Start container cluster in detached mode
+don't cache the build setup
 ```bash
-docker-compose up --build -d
+docker-compose build --no-cache
+docker-compose up -d
 ```
 
 Attach to container 
@@ -40,3 +42,10 @@ Should get output
 > Server starting on http://0.0.0.0:8080
 
 Application can be accessed now at localhost:8080/users for list of users or posting.
+
+# Test locally
+
+Runs local build structured test from /.circleci/config.yml
+```bash
+circleci local execute --job build
+```
