@@ -18,22 +18,15 @@ jobs:
           POSTGRES_DB: test
     steps:
       - checkout
+      - run: apt-get update
+      - run: apt-get install -yq libssl-dev pkg-config
       - run: swift build
       - run: swift test
 
-  release:
-    docker:
-      - image: swift:4.2
-    steps:
-      - checkout
-      - run: 
-          name: Compile code with optimizations
-          command: swift build -c release
   push-to-docker-hub:
     docker:
       - image: docker:latest
     steps:
-      - checkout
       - setup_remote_docker
       - run:
           name: Install dependencies
@@ -48,11 +41,6 @@ jobs:
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker push mjwrazor/swiftdevopsrepo:latest
             docker push mjwrazor/swiftdevopsrepo:$CIRCLE_SHA1
-#      - persist_to_workspace:
-#          root: ./
-#          paths:
-#            - k8s-*.yml
-
 workflows:
   version: 2
   tests:
@@ -65,4 +53,3 @@ workflows:
           filters:
             branches:
               only: master
-      #- linux-release
