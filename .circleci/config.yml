@@ -11,7 +11,7 @@ jobs:
           DB_HOSTNAME: db
           PORT: 5432
       - image: circleci/postgres:11.2-alpine-postgis-ram
-        name: psql
+        name: db
         environment:
           POSTGRES_USER: test
           POSTGRES_PASSWORD: test
