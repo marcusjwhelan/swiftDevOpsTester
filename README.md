@@ -49,3 +49,8 @@ Runs local build structured test from /.circleci/config.yml
 ```bash
 circleci local execute --job build
 ```
+
+# Push to Dockeer Locally
+```bash
+circleci local execute --job push-to-docker-hub
+```

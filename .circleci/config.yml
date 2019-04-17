@@ -3,7 +3,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: codevapor/swift:5.0
+      - image: norionomura/swift:5.0
         environment:
           POSTGRES_USER: test
           POSTGRES_PASSWORD: test
@@ -49,7 +49,6 @@ workflows:
       - push-to-docker-hub:
           requires:
             - build
-          context: dockerhub
           filters:
             branches:
               only: master
