@@ -61,6 +61,7 @@ jobs:
       - run:
           name: Build Docker Image
           command: |
+            cd workspace
             pwd
             ls -al
             docker build -t api .
