@@ -47,7 +47,6 @@ jobs:
     working_directory: /root/backend
     steps:
       - setup_remote_docker
-          reusable: true
       - run:
           name: Install dependencies
           command: |
