@@ -1,7 +1,14 @@
-version: 2
+version: 2.0
+
+references:
+  workspace_root: &workspace_root
+    /tmp/workspace
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
 
 jobs:
-  build:
+  build-image:
     docker:
       - image: norionomura/swift:5.0
         environment:
@@ -22,19 +29,37 @@ jobs:
       - run: apt-get install -yq libssl-dev pkg-config
       - run: swift build
       - run: swift test
+      - run:
+          name: Save build
+          command: |
+            docker save bundle > .build
+            ls -al
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./.build
 
   push-to-docker-hub:
     docker:
       - image: docker:latest
+        environment:
+          IMAGE_TAG: ci-testing-image
+    working_directory: /root/backend
     steps:
       - setup_remote_docker
+          reusable: true
       - run:
           name: Install dependencies
           command: |
+            apk update
+            apk add tar
             apk add --update --no-cache curl jq python py-pip
+      - *attach_workspace
       - run:
           name: Build Docker Image
           command: |
+            ls -al /tmp/workspace
+            ls -al
             docker build -t api .
             docker tag api mjwrazor/swiftdevopsrepo:latest
             docker tag api mjwrazor/swiftdevopsrepo:$CIRCLE_SHA1
@@ -43,12 +68,15 @@ jobs:
             docker push mjwrazor/swiftdevopsrepo:$CIRCLE_SHA1
 workflows:
   version: 2
+  build_and_test:
+    jobs:
+      - build-image
   tests:
     jobs:
-      - build
+      - build-image
       - push-to-docker-hub:
           requires:
-            - build
+            - build-image
           filters:
             branches:
               only: master
