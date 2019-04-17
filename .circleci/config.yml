@@ -9,6 +9,7 @@ references:
 
 jobs:
   build-image:
+    working_directory: /root/backend
     docker:
       - image: norionomura/swift:5.0
         environment:
@@ -32,13 +33,12 @@ jobs:
       - run:
           name: Save build
           command: |
-            docker save bundle > .build
+            pwd
             ls -al
       - persist_to_workspace:
           root: .
           paths:
-            - ./.build
-
+            - .
   push-to-docker-hub:
     docker:
       - image: docker:latest
@@ -57,7 +57,7 @@ jobs:
       - run:
           name: Build Docker Image
           command: |
-            ls -al /tmp/workspace
+            pwd
             ls -al
             docker build -t api .
             docker tag api mjwrazor/swiftdevopsrepo:latest
@@ -70,7 +70,7 @@ workflows:
   build_and_test:
     jobs:
       - build-image
-  tests:
+  push_to_hub:
     jobs:
       - build-image
       - push-to-docker-hub:
