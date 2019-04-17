@@ -55,6 +55,10 @@ jobs:
             apk add --update --no-cache curl jq python py-pip
       - *attach_workspace
       - run:
+          name: Move build to deploy
+          command: |
+            mv /tmp/workspace .
+      - run:
           name: Build Docker Image
           command: |
             pwd
