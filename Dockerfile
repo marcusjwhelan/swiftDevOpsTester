@@ -13,7 +13,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 #    apt-get -y install tzdata libssl-dev pkg-config \
 #    && rm -r /var/lib/apt/lists/*
 RUN apt-get -qq update && apt-get -q -y install \
-  tzdata \
+  tzdata libssl-dev pkg-config \
   && rm -r /var/lib/apt/lists/*
 WORKDIR /app
 COPY . .
@@ -34,7 +34,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 #    && rm -r /var/lib/apt/lists/*
 RUN apt-get -qq update && apt-get install -y \
   libicu55 libxml2 libbsd0 libcurl3 libatomic1 libssl-dev \
-  tzdata \
+  tzdata pkg-config \
   && rm -r /var/lib/apt/lists/*
 WORKDIR /app
 COPY --from=builder /build/bin/Run .
