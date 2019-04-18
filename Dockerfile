@@ -6,7 +6,7 @@ FROM norionomura/swift:5.0 as builder
 ARG env
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get -y install software-properties-common
-RUN add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/ubuntu/16.04/prod xenial main"
+#RUN add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/ubuntu/16.04/prod xenial main"
 RUN apt-get -y install libicu55
 RUN apt-get update && apt-get upgrade -y && \
     apt-get dist-upgrade -y && apt-get -y install apt-utils && \
@@ -22,7 +22,7 @@ FROM ubuntu:18.04
 ARG env
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get -y install software-properties-common
-RUN add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/ubuntu/16.04/prod xenial main"
+#RUN add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/ubuntu/16.04/prod xenial main"
 RUN apt-get -y install libicu55
 RUN apt-get update && apt-get upgrade -y && \
     apt-get dist-upgrade -y && apt-get -y install apt-utils && \
