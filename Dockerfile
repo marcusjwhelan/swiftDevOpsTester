@@ -9,8 +9,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get -qq update && apt-get -q -y install \
   libssl-dev pkg-config \
   && rm -r /var/lib/apt/lists/*
-#WORKDIR /app
-#COPY . .
+WORKDIR /app
+COPY . .
 RUN mkdir -p /build/lib && cp -R /usr/lib/swift/linux/*.so /build/lib
 RUN swift build -c release && mv `swift build -c release --show-bin-path` /build/bin
 
@@ -23,11 +23,10 @@ RUN apt-get -qq update && apt-get install -y \
   libxml2 libbsd0 libcurl3 libatomic1 libssl-dev \
   tzdata pkg-config \
   && rm -r /var/lib/apt/lists/*
-#WORKDIR /app
+WORKDIR /app
 COPY --from=builder /build/bin/Run .
 COPY --from=builder /build/lib/* /usr/lib/
 RUN ls -al
-
 # Uncomment the next line if you need to load resources from the `Public` directory
 #COPY --from=builder /app/Public ./Public
 
