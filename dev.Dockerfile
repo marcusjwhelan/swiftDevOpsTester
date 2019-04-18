@@ -1,7 +1,7 @@
 FROM norionomura/swift:5.0 as builder
 
 RUN apt-get -qq update && apt-get -q -y install \
-    libssl-dev pkg-config\
+    libssl-dev pkg-config apt-utils \
   && rm -r /var/lib/apt/lists/*
 
 WORKDIR /app/
