@@ -5,7 +5,9 @@ FROM norionomura/swift:5.0 as builder
 # In your application, you can use `Environment.custom(name: "docker")` to check if you're in this env
 ARG env
 
-RUN apt-get -qq update && apt-get -q -y install \
+RUN apt-get -qq update
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends apt-utils
+RUN apt-get -q -y install \
   tzdata libssl-dev pkg-config\
   && rm -r /var/lib/apt/lists/*
 WORKDIR /app
