@@ -9,7 +9,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get -qq update && apt-get -q -y install \
   libssl-dev pkg-config \
   && rm -r /var/lib/apt/lists/*
-WORKDIR /app
+WORKDIR .
 COPY . .
 RUN mkdir -p /build/lib && cp -R /usr/lib/swift/linux/*.so /build/lib
 RUN swift build -c release && mv `swift build -c release --show-bin-path` /build/bin
@@ -24,9 +24,8 @@ RUN apt-get -qq update && apt-get install -y \
   libxml2 libbsd0 libcurl3 libatomic1 libssl-dev \
   tzdata pkg-config \
   && rm -r /var/lib/apt/lists/*
-WORKDIR /app
+WORKDIR .
 RUN ls -al
-RUN ls -al build/lib/
 COPY --from=builder /build/bin/$EXECUTABLE Run
 COPY --from=builder /build/lib/* /usr/lib/
 
