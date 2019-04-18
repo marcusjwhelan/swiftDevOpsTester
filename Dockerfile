@@ -26,6 +26,7 @@ RUN apt-get -qq update && apt-get install -y \
   && rm -r /var/lib/apt/lists/*
 WORKDIR /app
 RUN ls -al
+RUN ls -al /build/lib/
 COPY --from=builder /build/bin/$EXECUTABLE Run
 COPY --from=builder /build/lib/* /usr/lib/
 
