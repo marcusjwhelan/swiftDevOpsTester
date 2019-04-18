@@ -4,11 +4,9 @@ FROM norionomura/swift:5.0 as builder
 # For local build, add `--build-arg env=docker`
 # In your application, you can use `Environment.custom(name: "docker")` to check if you're in this env
 ARG env
-
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install --assume-yes apt-utils
-RUN apt-get -q -y install \
-  tzdata libssl-dev pkg-config\
+RUN apt-get -qq update && apt-get -q -y install apt-utils \
+  libicu55 tzdata libssl-dev pkg-config\
   && rm -r /var/lib/apt/lists/*
 WORKDIR /app
 COPY . .
@@ -19,8 +17,7 @@ RUN swift build -c release && mv `swift build -c release --show-bin-path` /build
 FROM ubuntu:18.04
 ARG env
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install --assume-yes apt-utils
-RUN apt-get install -y \
+RUN apt-get -qq update && apt-get install -y apt-utils \
   libicu55 libxml2 libbsd0 libcurl3 libatomic1 \
   tzdata libssl-dev pkg-config \
   && rm -r /var/lib/apt/lists/*
