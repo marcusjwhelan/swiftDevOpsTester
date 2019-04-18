@@ -5,18 +5,12 @@ FROM norionomura/swift:5.0 as builder
 # In your application, you can use `Environment.custom(name: "docker")` to check if you're in this env
 ARG env
 ENV DEBIAN_FRONTEND=noninteractive
-# RUN apt-get update && apt-get -y install software-properties-common
-#RUN add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/ubuntu/16.04/prod xenial main"
-# RUN apt-get -y install libicu55
-#RUN apt-get update && apt-get upgrade -y && \
-#    apt-get dist-upgrade -y && apt-get -y install apt-utils && \
-#    apt-get -y install tzdata libssl-dev pkg-config \
-#    && rm -r /var/lib/apt/lists/*
+
 RUN apt-get -qq update && apt-get -q -y install \
-  tzdata libssl-dev pkg-config \
+  libssl-dev pkg-config \
   && rm -r /var/lib/apt/lists/*
-WORKDIR /app
-COPY . .
+#WORKDIR /app
+#COPY . .
 RUN mkdir -p /build/lib && cp -R /usr/lib/swift/linux/*.so /build/lib
 RUN swift build -c release && mv `swift build -c release --show-bin-path` /build/bin
 
@@ -24,21 +18,15 @@ RUN swift build -c release && mv `swift build -c release --show-bin-path` /build
 FROM ubuntu:18.04
 ARG env
 ENV DEBIAN_FRONTEND=noninteractive
-#RUN apt-get update && apt-get -y install software-properties-common
-#RUN add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/ubuntu/16.04/prod xenial main"
-#RUN apt-get -y install libicu55
-#RUN apt-get update && apt-get upgrade -y && \
-#    apt-get dist-upgrade -y && apt-get -y install apt-utils && \
-#    apt-get -y install libxml2 libbsd0 libcurl3 libatomic1 \
-#    tzdata libssl-dev pkg-config \
-#    && rm -r /var/lib/apt/lists/*
+
 RUN apt-get -qq update && apt-get install -y \
   libxml2 libbsd0 libcurl3 libatomic1 libssl-dev \
   tzdata pkg-config \
   && rm -r /var/lib/apt/lists/*
-WORKDIR /app
+#WORKDIR /app
 COPY --from=builder /build/bin/Run .
 COPY --from=builder /build/lib/* /usr/lib/
+RUN ls -al
 
 # Uncomment the next line if you need to load resources from the `Public` directory
 #COPY --from=builder /app/Public ./Public
@@ -50,5 +38,6 @@ ENV ENVIRONMENT=$env
 ENV DEBIAN_FRONTEND teletype
 
 EXPOSE 8080
-ENTRYPOINT ./Run serve --env production -b 0.0.0.0
+CMD ["./Run"]
+# ENTRYPOINT ./Run serve --env production -b 0.0.0.0
 #ENTRYPOINT ./Run serve --env $ENVIRONMENT --hostname 0.0.0.0 --port 80
