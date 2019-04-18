@@ -6,7 +6,7 @@ FROM norionomura/swift:5.0 as builder
 ARG env
 
 RUN apt-get -qq update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends apt-utils
+RUN apt-get install -y --no-install-recommends apt-utils
 RUN apt-get -q -y install \
   tzdata libssl-dev pkg-config\
   && rm -r /var/lib/apt/lists/*
@@ -19,7 +19,7 @@ RUN swift build -c release && mv `swift build -c release --show-bin-path` /build
 FROM ubuntu:18.04
 ARG env
 RUN apt-get -qq update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends apt-utils
+RUN apt-get install -y --no-install-recommends apt-utils
 RUN apt-get install -y \
   libicu55 libxml2 libbsd0 libcurl3 libatomic1 \
   tzdata libssl-dev pkg-config \
