@@ -26,6 +26,14 @@ RUN apt-get -qq update && apt-get install -y \
   && rm -r /var/lib/apt/lists/*
 WORKDIR .
 RUN ls -al
+RUN ls -al bin/
+RUN ls -al boot/
+RUN ls -al dev/
+RUN ls -al etc/
+RUN ls -al home/
+RUN ls -al run/
+RUN ls -al tmp/
+RUN ls -al usr/
 COPY --from=builder /build/bin/$EXECUTABLE Run
 COPY --from=builder /build/lib/* /usr/lib/
 
