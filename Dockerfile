@@ -6,9 +6,9 @@ FROM norionomura/swift:5.0 as builder
 ARG env
 ENV DEBIAN_FRONTEND=noninteractive
 
-# RUN apt-get -qq update && apt-get -q -y install \
-#  libssl-dev pkg-config \
-#  && rm -r /var/lib/apt/lists/*
+RUN apt-get -qq update && apt-get -q -y install \
+  libssl-dev pkg-config \
+  && rm -r /var/lib/apt/lists/*
 WORKDIR /app
 COPY . .
 RUN mkdir -p /build/lib && cp -R /usr/lib/swift/linux/*.so /build/lib
