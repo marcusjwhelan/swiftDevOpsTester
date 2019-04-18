@@ -7,7 +7,7 @@ ARG env
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get upgrade -y && \
     apt-get dist-upgrade -y && apt-get -y install apt-utils && \
-    libicu55 tzdata libssl-dev pkg-config \
+    apt-get -y install libicu55 tzdata libssl-dev pkg-config \
     && rm -r /var/lib/apt/lists/*
 WORKDIR /app
 COPY . .
