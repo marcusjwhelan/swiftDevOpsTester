@@ -5,10 +5,10 @@ FROM norionomura/swift:5.0 as builder
 # In your application, you can use `Environment.custom(name: "docker")` to check if you're in this env
 ARG env
 ENV DEBIAN_FRONTEND=noninteractive
-RUN add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/ubuntu/16.04/prod xenial main"
+RUN apt-get -y install libicu55
 RUN apt-get update && apt-get upgrade -y && \
     apt-get dist-upgrade -y && apt-get -y install apt-utils && \
-    apt-get -y install libicu55 tzdata libssl-dev pkg-config \
+    apt-get -y install tzdata libssl-dev pkg-config \
     && rm -r /var/lib/apt/lists/*
 WORKDIR /app
 COPY . .
@@ -19,10 +19,10 @@ RUN swift build -c release && mv `swift build -c release --show-bin-path` /build
 FROM ubuntu:18.04
 ARG env
 ENV DEBIAN_FRONTEND=noninteractive
-RUN add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/ubuntu/16.04/prod xenial main"
+RUN apt-get -y install libicu55
 RUN apt-get update && apt-get upgrade -y && \
     apt-get dist-upgrade -y && apt-get -y install apt-utils && \
-    apt-get -y install libicu55 libxml2 libbsd0 libcurl3 libatomic1 \
+    apt-get -y install libxml2 libbsd0 libcurl3 libatomic1 \
     tzdata libssl-dev pkg-config \
     && rm -r /var/lib/apt/lists/*
 
