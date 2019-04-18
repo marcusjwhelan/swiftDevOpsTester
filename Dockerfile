@@ -33,7 +33,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 #    tzdata libssl-dev pkg-config \
 #    && rm -r /var/lib/apt/lists/*
 RUN apt-get -qq update && apt-get install -y \
-  libicu55 libxml2 libbsd0 libcurl3 libatomic1 \
+  libicu55 libxml2 libbsd0 libcurl3 libatomic1 libssl-dev \
   tzdata \
   && rm -r /var/lib/apt/lists/*
 WORKDIR /app
