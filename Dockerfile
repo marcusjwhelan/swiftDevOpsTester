@@ -17,7 +17,7 @@ RUN swift build -c release && mv `swift build -c release --show-bin-path` /build
 FROM ubuntu:18.04
 ARG env
 RUN apt-get -qq update && apt-get install -y \
-  libicu55 libxml2 libbsd0 libcurl3 libatomic1 \
+  apt-utils libicu55 libxml2 libbsd0 libcurl3 libatomic1 \
   tzdata libssl-dev pkg-config \
   && rm -r /var/lib/apt/lists/*
 WORKDIR /app
