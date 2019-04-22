@@ -50,7 +50,5 @@ Runs local build structured test from /.circleci/config.yml
 circleci local execute --job build
 ```
 
-# Push to Dockeer Locally
-```bash
-circleci local execute --job push-to-docker-hub
-```
+# Pushing to Docker hub
+All that needs to be done is commit to the master branch.
