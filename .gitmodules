@@ -1,4 +1,1 @@
-[submodule "client"]
-	path = client
-	url = https://github.com/marcusjwhelan/swiftDevOpsTesterFE.git
-	branch = master
+
