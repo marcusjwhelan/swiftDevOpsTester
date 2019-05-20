@@ -52,3 +52,11 @@ circleci local execute --job build
 
 # Pushing to Docker hub
 All that needs to be done is commit to the master branch.
+
+## Add content through users
+Using postman hit address `localhost:8080/users/` with a post request holding `{"username":"content","password":"admin"}`. Now your first user is added. This is the simple route on the end of an api. 
+
+# Turn off dev env
+```bash
+docker-compose down
+```
