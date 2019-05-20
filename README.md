@@ -20,6 +20,10 @@
 </p>
 
 # Start Development
+Cloning
+```bash
+git clone --recursive https://github.com/marcusjwhelan/swiftDevOpsTester.git
+```
 
 Start container cluster in detached mode
 don't cache the build setup
@@ -60,3 +64,10 @@ Using postman hit address `localhost:8080/users/` with a post request holding `{
 ```bash
 docker-compose down
 ```
+
+# Setting up project
+When adding client I used gatsby from the outside then `cd` into gatsby client directory. Did all the git init work and created new repo on github. Once that was done I navigated back to project directory and made the client directory a submodule with 
+```bash
+git submodule add https://github.com/marcusjwhelan/swiftDevOpsTesterReact.git client
+```
+And a `git push -f`
