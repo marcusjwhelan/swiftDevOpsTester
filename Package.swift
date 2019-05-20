@@ -17,7 +17,8 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-nio-ssl.git", from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-nio-http2.git", from: "0.1.0"),
         .package(url: "https://github.com/apple/swift-nio-transport-services.git", from: "0.1.0"),
-        .package(url: "https://github.com/apple/swift-nio-extras.git", from: "0.1.0")
+        .package(url: "https://github.com/apple/swift-nio-extras.git", from: "0.1.0"),
+        .package(url: "https://github.com/apple/swift-nio-zlib-support.git", from: "1.0.0"),
     ],
     targets: [
         .target(name: "App", dependencies: ["FluentPostgreSQL", "Vapor"]),

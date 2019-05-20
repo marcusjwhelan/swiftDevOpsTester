@@ -1,4 +1,4 @@
-FROM norionomura/swift:5.0 as builder
+FROM norionomura/swift:4.2 as builder
 
 RUN apt-get -qq update && apt-get -q -y install \
     libssl-dev pkg-config apt-utils \

@@ -51,11 +51,13 @@ Application can be accessed now at localhost:8080/users for list of users or pos
 
 Runs local build structured test from /.circleci/config.yml
 ```bash
-circleci local execute --job build
+circleci local execute --job build-image
 ```
 
 # Pushing to Docker hub
 All that needs to be done is commit to the master branch.
+
+Possibly changed to it having to be a pull request. not sure if it has to be on master
 
 ## Add content through users
 Using postman hit address `localhost:8080/users/` with a post request holding `{"username":"content","password":"admin"}`. Now your first user is added. This is the simple route on the end of an api. 
