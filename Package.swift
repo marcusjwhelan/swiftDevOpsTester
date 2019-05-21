@@ -1,4 +1,4 @@
-// swift-tools-version:4.1
+// swift-tools-version:4.0
 import PackageDescription
 
 let package = Package(
@@ -13,6 +13,7 @@ let package = Package(
         // 🔵 Swift ORM (queries, models, relations, etc) built on SQLite 3.
         .package(url: "https://github.com/vapor/fluent-postgresql.git", from: "1.0.0"),
         
+        // Needed packages for package to work on circleci server?
         .package(url: "https://github.com/apple/swift-nio.git", from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-nio-ssl.git", from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-nio-http2.git", from: "0.1.0"),

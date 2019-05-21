@@ -1,6 +1,7 @@
 import Vapor
 import Fluent
 import Crypto
+import Foundation
 
 final class UserController: RouteCollection {
     func boot(router: Router) throws {
