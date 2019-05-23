@@ -18,3 +18,4 @@ DerivedData/
 
 # module directory
 .terraform/
+/node_modules

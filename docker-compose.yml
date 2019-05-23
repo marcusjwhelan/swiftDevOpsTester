@@ -1,5 +1,24 @@
 version: "3.7"
 services:
+  nginx:
+    container_name: nginx-react-front-end
+    build:
+      context: ./client
+      dockerfile: Dockerfile-dev
+    hostname: client
+    command: npm start
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    environment:
+      NODE_ENV: development
+    ports:
+      - 3000:3000
+    depends_on:
+      - api
+    networks:
+      - vapor-it-backend
+    restart: always
   db:
     container_name: postgres11.3-alpine-database
     image: postgres:11.3-alpine
@@ -35,8 +54,6 @@ services:
         published: 8080
         protocol: tcp
         mode: host
-    expose:
-      - 8080
     volumes:
       - .:/app
     working_dir: /app
@@ -46,27 +63,27 @@ services:
     restart: always
     depends_on:
       - db
-    # command: ["./.setup/docker-entrypoint.sh", "db", "swift", "run"]
+    #command: ["./.setup/docker-entrypoint.sh", "db", "swift", "run"]
 
-  pgadmin:
-    container_name: pgadmin_container
-    image: dpage/pgadmin4
-    hostname: pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: test@test.com
-      PGADMIN_DEFAULT_PASSWORD: test
-    volumes:
-      - pgadmin:/root/.pgadmin
-    ports:
-      - target: 80
-        published: 4000
-        protocol: tcp
-        mode: host
-    networks:
-      - vapor-it-backend
-    restart: unless-stopped
-    depends_on:
-      - db
+#  pgadmin:
+#    container_name: pgadmin_container
+#    image: dpage/pgadmin4
+#    hostname: pgadmin
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: test@test.com
+#      PGADMIN_DEFAULT_PASSWORD: test
+#    volumes:
+#      - pgadmin:/root/.pgadmin
+#    ports:
+#      - target: 4001
+#        published: 4000
+#        protocol: tcp
+#        mode: host
+#    networks:
+#      - vapor-it-backend
+#    restart: unless-stopped
+#    depends_on:
+#      - db
 
 networks:
   vapor-it-backend:
@@ -74,5 +91,5 @@ networks:
 volumes:
   database_data:
     driver: local
-  pgadmin:
+#  pgadmin:
 
