@@ -65,25 +65,25 @@ services:
       - db
     #command: ["./.setup/docker-entrypoint.sh", "db", "swift", "run"]
 
-#  pgadmin:
-#    container_name: pgadmin_container
-#    image: dpage/pgadmin4
-#    hostname: pgadmin
-#    environment:
-#      PGADMIN_DEFAULT_EMAIL: test@test.com
-#      PGADMIN_DEFAULT_PASSWORD: test
-#    volumes:
-#      - pgadmin:/root/.pgadmin
-#    ports:
-#      - target: 4001
-#        published: 4000
-#        protocol: tcp
-#        mode: host
-#    networks:
-#      - vapor-it-backend
-#    restart: unless-stopped
-#    depends_on:
-#      - db
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    hostname: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: test@test.com
+      PGADMIN_DEFAULT_PASSWORD: test
+    volumes:
+      - pgadmin:/root/.pgadmin
+    ports:
+      - target: 80
+        published: 4000
+        protocol: tcp
+        mode: host
+    networks:
+      - vapor-it-backend
+    restart: unless-stopped
+    depends_on:
+      - db
 
 networks:
   vapor-it-backend:
@@ -91,5 +91,5 @@ networks:
 volumes:
   database_data:
     driver: local
-#  pgadmin:
+  pgadmin:
 
